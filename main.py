@@ -62,10 +62,16 @@ def generate_subtitle_file(language, segments, input_video_name):
     f.close()
     return subtitle_file
 
-
 def process_video(video_file):
     input_video_path = os.path.join("videos", video_file)
     input_video_name, _ = os.path.splitext(video_file)
+
+    # Check if subtitle file already exists
+    subtitle_file = f"created_subtitles/sub-{input_video_name}.{LANG}.srt" 
+    if os.path.exists(subtitle_file):
+        print(f"Subtitle file already exists: {subtitle_file}")
+        return  # Skip to the next video
+
     extracted_audio = extract_audio(input_video_path, input_video_name)
     language, segments = transcribe(audio=extracted_audio)
     subtitle_file = generate_subtitle_file(language, segments, input_video_name)
