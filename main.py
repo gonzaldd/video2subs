@@ -6,17 +6,22 @@ import os
 LANG = 'es' # Change by language of the videos
 WHISPER_MODEL = "base" # Modify by your hardware
 
-def extract_audio(input_video_path, input_video_name):
-    # Create the 'created_audios' folder if it doesn't exist
-    os.makedirs("created_audios", exist_ok=True)
 
-    extracted_audio = f"created_audios/audio-{input_video_name}.wav"
+def extract_audio(input_video_path, input_video_name):
+    # Check if audio file already exists
+    os.makedirs("created_audios", exist_ok=True)
+    extracted_audio = f"created_audios/audio-{input_video_name}.mp3"
+    if os.path.exists(extracted_audio):
+        print(f"Audio file already exists: {extracted_audio}")
+        return extracted_audio
+
+    # Extract audio if it doesn't exist
     stream = ffmpeg.input(input_video_path)
-    stream = ffmpeg.output(stream, extracted_audio)
+    stream = ffmpeg.output(stream, extracted_audio, acodec="libmp3lame")
     ffmpeg.run(stream, overwrite_output=True)
     return extracted_audio
 
-
+# ... (rest of the code remains the same)
 def transcribe(audio):
     model = WhisperModel(WHISPER_MODEL)
     segments, info = model.transcribe(audio, language=LANG)
