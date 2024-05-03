@@ -23,7 +23,7 @@ def extract_audio(input_video_path, input_video_name):
 
 def transcribe(audio):
     model = WhisperModel(WHISPER_MODEL)
-    segments, info = model.transcribe(audio, language=LANG)
+    segments, info = model.transcribe(audio, language=LANG, vad_filter=True, vad_parameters=dict(min_silence_duration_ms=1000))
     language = info[0]
     print("Transcription language", info[0])
     segments = list(segments)
