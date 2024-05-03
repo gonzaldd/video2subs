@@ -21,7 +21,6 @@ def extract_audio(input_video_path, input_video_name):
     ffmpeg.run(stream, overwrite_output=True)
     return extracted_audio
 
-# ... (rest of the code remains the same)
 def transcribe(audio):
     model = WhisperModel(WHISPER_MODEL)
     segments, info = model.transcribe(audio, language=LANG)
