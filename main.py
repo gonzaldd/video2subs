@@ -3,9 +3,7 @@ import ffmpeg
 from faster_whisper import WhisperModel
 import os
 
-LANG = 'es' # Change by language of the videos
 WHISPER_MODEL = "base" # Modify by your hardware
-
 
 def extract_audio(input_video_path, input_video_name):
     # Check if audio file already exists
@@ -23,7 +21,7 @@ def extract_audio(input_video_path, input_video_name):
 
 def transcribe(audio):
     model = WhisperModel(WHISPER_MODEL)
-    segments, info = model.transcribe(audio, language=LANG, vad_filter=True, vad_parameters=dict(min_silence_duration_ms=1000))
+    segments, info = model.transcribe(audio, vad_filter=True, vad_parameters=dict(min_silence_duration_ms=1000))
     language = info[0]
     print("Transcription language", info[0])
     segments = list(segments)
@@ -65,12 +63,6 @@ def generate_subtitle_file(language, segments, input_video_name):
 def process_video(video_file):
     input_video_path = os.path.join("videos", video_file)
     input_video_name, _ = os.path.splitext(video_file)
-
-    # Check if subtitle file already exists
-    subtitle_file = f"created_subtitles/sub-{input_video_name}.{LANG}.srt" 
-    if os.path.exists(subtitle_file):
-        print(f"Subtitle file already exists: {subtitle_file}")
-        return  # Skip to the next video
 
     extracted_audio = extract_audio(input_video_path, input_video_name)
     language, segments = transcribe(audio=extracted_audio)
