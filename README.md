@@ -1,20 +1,60 @@
+
 # Video2Subs
 
 This Python script automates the process of generating subtitles for videos using the Whisper speech recognition model.
+
+
 
 ## Prerequisites
 
 To run this script, you will need:
 
 - **Python 3.9+:** Ensure you have Python 3.9 or a later version installed. You can download it from the [official Python website](https://www.python.org/).
-- **venv:** A virtual environment is recommended to isolate the project's dependencies. You can learn how to create and use virtual environments [here](https://docs.python.org/3/library/venv.html).
-- **FFmpeg:** This is used for audio extraction from videos. You can download FFmpeg from the [official website](https://ffmpeg.org/).
-- **Create folder "videos"** and put inside the videos to create subs.
+## Run Locally
 
-## Instalation
+Put your videos in videos folder. 
+
+Clone the project
 
 ```bash
-python3 -m venv env
-source env/bin/activate
-pip3 install faster-whisper ffmpeg-python
+  git clone git@github.com:gonzaldd/video2subs.git
 ```
+
+Go to the project directory
+
+```bash
+  cd video2subs
+```
+
+Create env
+
+```bash
+  python3 -m venv env
+```
+
+Activate env
+
+```bash
+  source env/bin/activate
+```
+
+Install dependencies
+
+```bash
+  pip3 install faster-whisper ffmpeg-python
+```
+
+Run the script
+
+```bash
+  python3 main.py
+```
+
+
+The subtitles will create in created_subtitles folder
+
+
+## Demo
+
+![](https://github.com/gonzaldd/video2subs/blob/main/media/demo.gif)
+
